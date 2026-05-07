@@ -1,11 +1,20 @@
 async function getReviews() {
-  const res = await fetch("http://localhost:3000/api/reviews", {
-    cache: "no-store",
-  })
+  try {
+    const res = await fetch("http://localhost:3000/api/reviews", {
+      cache: "no-store",
+    })
 
-  return res.json()
+    if (!res.ok) {
+      return []
+    }
+
+    return res.json()
+
+  } catch (error) {
+    console.error(error)
+    return []
+  }
 }
-
 export default async function Home() {
 
   const reviews = await getReviews()
